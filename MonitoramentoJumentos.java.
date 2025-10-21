@@ -1,0 +1,62 @@
+import java.util.Scanner;
+
+public class MonitoramentoJumentos
+{
+    public static void main(String[] args) {
+        Scanner ler = new Scanner(System.in);
+
+
+        int populacaoInicial = 1400000;
+        int populacaoAtual = 84000;
+        int abatesAnuais = 50000;
+        int anosSimulados = 0;
+
+        while (true){
+        System.out.println ("Digite o número de anos para simulação: (1 , 3 ,5)\n");
+        anosSimulados = ler.nextInt();
+        if (anosSimulados == 1){
+            break;
+        } else if (anosSimulados == 3) {
+            break;
+        } else if (anosSimulados ==5) {
+            break;
+        }else {
+            System.out.println("valores em anos (1 , 3 ,5)");
+        }
+
+        }
+
+            double taxa = calcularTaxaReducao(populacaoInicial, populacaoAtual);
+        boolean riscoCritico = estaEmRiscoCritico(taxa);
+        int restante = simularImpactoAbate(populacaoAtual, abatesAnuais, anosSimulados);
+        System.out.println("=== S.O.S. JUMENTO NORDESTINO - SISTEMA DE MONITORAMENTO ===\n");
+        System.out.println("População inicial de referência: "+ populacaoInicial);
+        System.out.println("Abates anuais (simulados): "+ abatesAnuais);
+
+        System.out.printf("Redução %.2f\n", taxa);
+        System.out.println("Risco crítico " + (riscoCritico ? "SIM" : "NÃO"));
+
+        exibirDeclaracaoFinal(restante, anosSimulados);
+
+        ler.close();
+}public static double calcularTaxaReducao(int populacaoInicial, int populacaoAtual) {
+    double taxaReducao = (1 - ((double) populacaoAtual / populacaoInicial)) * 100;
+    return taxaReducao;
+}
+public static boolean estaEmRiscoCritico(double taxaReducao) {
+    return taxaReducao >= 90.0;
+
+}
+
+public static int simularImpactoAbate(int populacaoAtual, int abatesAnuais, int anosSimulados) {
+    int populacaoRestante = populacaoAtual - (abatesAnuais * anosSimulados);
+    return populacaoRestante;
+}
+public static void exibirDeclaracaoFinal(int populacaoRestante, int anos) {
+    System.out.println("===== Resultado da Simulação =====");
+    System.out.println("Após " + anos + " anos simulados:");
+    if (populacaoRestante <= 0) {
+        System.out.println("ALERTA: População extinta ou abaixo de zero!");
+    } else {
+        System.out.println("População restante estimada: " + populacaoRestante + " jumentos.");
+    }}}
